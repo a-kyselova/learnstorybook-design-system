@@ -16,6 +16,7 @@ jobs:
         with:
           #👇 Sets the version of Node.js to use
           node-version: '18'
+      - run: npm install -g concurrently http-server wait-on
       - name: Install dependencies
         run: yarn
       - name: Install Playwright
@@ -24,10 +25,9 @@ jobs:
         run: yarn build-storybook --quiet
       - name: Serve Storybook and run tests
         run: 
-          npm install -g concurrently http-server wait-on
           concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "http-server storybook-static --port 6006 --silent" \
-            "wait-on tcp:6006 && yarn test-storybook"
+          "http-server storybook-static --port 6006 --silent" \
+          "wait-on tcp:6006 && yarn test-storybook"
   visual-tests:
     timeout-minutes: 10
     # The operating system it will run on
