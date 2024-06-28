@@ -12,30 +12,30 @@ This template ships with the main React configuration files you'll need to get u
 
 ## 🚅 Quick start
 
-1.  **Create the application.**
+1. **Create the application.**
+   
+   Use [degit](https://github.com/Rich-Harris/degit) to get this template.
+   
+   ```shell
+   # Clone the template
+   npx degit chromaui/learnstorybook-design-system-template learnstorybook-design-system
+   ```
 
-    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
+2. **Install the dependencies.**
+   
+   Navigate into your new site’s directory and install the necessary dependencies.
+   
+   ```shell
+   # Navigate to the directory
+   cd learnstorybook-design-system/
+   
+   # Install the dependencies
+   yarn
+   ```
 
-    ```shell
-    # Clone the template
-    npx degit chromaui/learnstorybook-design-system-template learnstorybook-design-system
-    ```
-
-1.  **Install the dependencies.**
-
-    Navigate into your new site’s directory and install the necessary dependencies.
-
-    ```shell
-    # Navigate to the directory
-    cd learnstorybook-design-system/
-
-    # Install the dependencies
-    yarn
-    ```
-
-1.  **Open the source code and start editing!**
-
-    Open the `learnstorybook-design-system` directory in your code editor of choice and building your first component!
+3. **Open the source code and start editing!**
+   
+   Open the `learnstorybook-design-system` directory in your code editor of choice and building your first component!
 
 ## 🔎 What's inside?
 
@@ -55,23 +55,23 @@ A quick look at the top-level files and directories included with this template.
     ├── yarn.lock
     └── README.md
 
-1.  **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
+1. **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
 
-2.  **`src`**: This directory will contain all of the code related to what you will see on your application.
+2. **`src`**: This directory will contain all of the code related to what you will see on your application.
 
-3.  **`.babelrc.json`**: This file tells babel which presets and plugins to use when transforming your code.
+3. **`.babelrc.json`**: This file tells babel which presets and plugins to use when transforming your code.
 
-4.  **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
+4. **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
 
-5.  **`.prettierignore`**: This file tells prettier which files it should not format.
+5. **`.prettierignore`**: This file tells prettier which files it should not format.
 
-6.  **`.prettierrc`**: This file tells prettier which rules to use when formatting your code.
+6. **`.prettierrc`**: This file tells prettier which rules to use when formatting your code.
 
-7.  **`LICENSE`**: The template is licensed under the MIT licence.
+7. **`LICENSE`**: The template is licensed under the MIT licence.
 
-8.  **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
+8. **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
 
-9.  **`rollup.config.mjs`**: This file tells rollup which plugins to use when bundling your code.
+9. **`rollup.config.mjs`**: This file tells rollup which plugins to use when bundling your code.
 
 10. **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
 
