@@ -23,7 +23,8 @@ jobs:
       - name: Build Storybook
         run: yarn build-storybook --quiet
       - name: Serve Storybook and run tests
-        run: |
+        run: 
+          npm install -g concurrently http-server wait-on
           concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "http-server storybook-static --port 6006 --silent" \
             "wait-on tcp:6006 && yarn test-storybook"
