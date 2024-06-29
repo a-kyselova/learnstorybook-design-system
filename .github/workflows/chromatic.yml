@@ -1,57 +1,49 @@
+name: Chromatic
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
 
-# Name of our action
-name: 'Chromatic'
-# The event that will trigger the action
-on: pull_request
-
-# What the action will do
 jobs:
   chromatic:   
-    name: Chromatic
+    name: Build & Publish to Chromatic
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
         with:
+          node-version-file: 'package.json'
           cache: 'yarn'
-          node-version: 18
-      - name: 📥 Install deps
-        run: yarn
-      - name: Build Storybook
+
+      - name: 📥 Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 💅 Build Storybook
         run: npm run build-storybook
-      - name: ⚡ Run chromatic
+
+      - name: 🚀 Publish to Chromatic
+        id: publish-to-chromatic
         uses: chromaui/action@latest
-        # Chromatic GitHub Action options
         with:
-          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/design-systems-for-developers/react/en/review/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
           exitZeroOnChanges: true
           exitOnceUploaded: true
           onlyChanged: true
+          junitReport: true
+          zip: true
+          buildScriptName: 'storybook:build'
 
-# Run interaction tests
-  interaction-tests:
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'yarn'
-      - name: Install dependencies
-        run: |
-          yarn
-          npm install -g concurrently http-server wait-on
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-      - name: Build Storybook
-        run: yarn build-storybook
-      - name: Serve & Test Storybook
-        run: yarn test-storybook:ci
+      - name: Run Storybook tests
+        run: yarn storybook:test
+        env:
+          TARGET_URL: ${{ steps.publish-to-chromatic.outputs.storybookUrl }}
