@@ -1,3 +1,4 @@
 {
-  "projectId": "Project:667e5b4e54e183aba6af68c9"
+  "projectId": "Project:667e5b4e54e183aba6af68c9",
+  "buildScriptName": "storybook:build"
 }
