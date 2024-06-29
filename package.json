@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.21.5",
@@ -80,7 +81,7 @@
     "storybook:deploy:chromatic": "chromatic",
     "storybook:run:dev": "storybook dev -p 6006",
     "storybook:test": "test-storybook",
-    "storybook:test:ci": "concurrently --kill-others --success first --names \"SB,TEST\" --prefix-colors \"magenta,blue\" \"http-server storybook-static --port 6006\" \"wait-on tcp:6006 && yarn test-storybook\"",
+    "storybook:test:ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"yarn storybook:build --quiet && npx http-server storybook-static --port 6006 --silent\" \"wait-on tcp:6006 && yarn storybook:test\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "rollup --watch -c --bundleConfigAsCjs"
   },

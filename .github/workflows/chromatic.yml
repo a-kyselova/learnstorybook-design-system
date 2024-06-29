@@ -39,7 +39,6 @@ jobs:
           exitZeroOnChanges: true
           exitOnceUploaded: true
           onlyChanged: true
-          junitReport: true
           zip: true
           buildScriptName: 'storybook:build'
 
