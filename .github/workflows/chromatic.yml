@@ -43,6 +43,6 @@ jobs:
           buildScriptName: 'storybook:build'
 
       - name: 🔮 Run Storybook tests
-        run: yarn storybook:test
+        run: npx playwright install --with-deps && yarn storybook:test
         env:
           TARGET_URL: ${{ steps.publish-to-chromatic.outputs.storybookUrl }}
