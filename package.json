@@ -78,9 +78,10 @@
     "prebuild": "yarn clean",
     "release": "yarn build && auto shipit",
     "storybook:build": "storybook build",
+    "storybook:build:docs": "storybook build  --docs",
     "storybook:deploy:chromatic": "chromatic",
     "storybook:run:dev": "storybook dev -p 6006",
-    "storybook:test": "test-storybook",
+    "storybook:test": "test-storybook --coverage",
     "storybook:test:ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"yarn storybook:build --quiet && npx http-server storybook-static --port 6006 --silent\" \"wait-on tcp:6006 && yarn storybook:test\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "rollup --watch -c --bundleConfigAsCjs"

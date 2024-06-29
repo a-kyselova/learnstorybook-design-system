@@ -1,8 +1,15 @@
+
 import { Avatar } from './Avatar';
 
 export default {
   title: 'Design System/Avatar',
   component: Avatar,
+  // 👇 Disable auto-generated documentation for this component
+  tags: ['!autodocs'],
+  parameters: {
+    componentSubtitle:
+      'Displays an image that represents a user or organization',
+  },
   /*
    * More on Storybook argTypes at:
    * https://storybook.js.org/docs/react/api/argtypes
@@ -25,6 +32,9 @@ export const Standard = {
   },
 };
 
+/**
+ * 4 sizes are supported.
+ */
 export const Sizes = {
   args: {
     username: 'Tom Coleman',
@@ -40,6 +50,9 @@ export const Sizes = {
   ),
 };
 
+/**
+ * Shows the user's initials as a fallback when no image is provided.
+ */
 export const Initials = {
   render: (args) => (
     <>
@@ -51,6 +64,9 @@ export const Initials = {
   ),
 };
 
+/**
+ * Shows a loading indicator.
+ */
 export const Loading = {
   args: {
     loading: true,
@@ -65,6 +81,9 @@ export const Loading = {
   ),
 };
 
+/**
+ * Shows the user's avatar when provided with a `src` prop or in various states and sizes.
+ */
 export const Large = {
   render: () => (
     <>
@@ -79,10 +98,8 @@ export const Large = {
   ),
 };
 
-/*
- * New story using Controls
- * Read more about Storybook templates at:
- * https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+/**
+ * Avatar component using Controls
  */
 export const Controls = {
   args: {
