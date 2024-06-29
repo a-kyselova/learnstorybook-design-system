@@ -28,7 +28,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: 💅 Build Storybook
-        run: npm run build-storybook
+        run: yarn storybook:build
 
       - name: 🚀 Publish to Chromatic
         id: publish-to-chromatic
