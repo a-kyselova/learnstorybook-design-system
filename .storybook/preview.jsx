@@ -1,7 +1,7 @@
 
  import { Global } from '@emotion/react';
-
  import { GlobalStyle } from '../src/shared/global';
+ import { themes } from '@storybook/theming';
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
@@ -10,7 +10,7 @@ const preview = {
      <>
        <Global styles={GlobalStyle} />
        <Story />
-     </>
+     </> 
    ),
  ],
   parameters: {
@@ -21,6 +21,9 @@ const preview = {
         date: /Date$/,
       },
     },
+    darkMode: {
+      current: 'dark'  // Set the initial theme
+    }
   },
   tags: ['autodocs']
 };
