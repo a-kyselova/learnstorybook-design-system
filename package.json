@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.21.5",
@@ -12,6 +13,8 @@
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.3",
+    "@storybook/addon-a11y": "^8.1.11",
+    "@storybook/addon-coverage": "^1.0.4",
     "@storybook/addon-essentials": "^8.1.11",
     "@storybook/addon-interactions": "^8.1.11",
     "@storybook/addon-links": "^8.1.11",
@@ -39,6 +42,9 @@
     "storybook": "^8.1.11",
     "vite": "^4.5.3",
     "zx": "^1.14.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "files": [
     "dist/**/*",
@@ -68,13 +74,15 @@
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
-    "build-storybook": "storybook build",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist ./storybook-static ./coverage",
     "prebuild": "yarn clean",
     "release": "yarn build && auto shipit",
-    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "storybook:deploy:chromatic": "chromatic",
+    "storybook:run:dev": "storybook dev -p 6006",
+    "storybook:test": "test-storybook",
+    "storybook:test:ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"yarn storybook:build --quiet && npx http-server storybook-static --port 6006 --silent\" \"wait-on tcp:6006 && yarn storybook:test\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test-storybook": "test-storybook",
     "watch": "rollup --watch -c --bundleConfigAsCjs"
   },
   "version": "0.1.0"

@@ -1,47 +1,48 @@
+name: Chromatic
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
 
-# Name of our action
-name: 'Chromatic'
-# The event that will trigger the action
-on: push
-
-# What the action will do
 jobs:
-  # Run interaction tests
-  interaction-tests:
+  chromatic:   
+    name: Build & Publish to Chromatic
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
         with:
-          #👇 Sets the version of Node.js to use
-          node-version: 18
-      - name: Install dependencies
-        run: yarn
-      - name: Install Playwright
-        run: npx playwright install --with-deps
-      - name: Build Storybook
-        run: yarn build-storybook --quiet
-      - name: Serve Storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue"             "npx http-server storybook-static --port 6006 --silent"             "npx wait-on tcp:6006 && yarn test-storybook"
-  visual-tests:
-    # The operating system it will run on
-    runs-on: ubuntu-latest
-    # The list of steps that the action will go through
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          #👇 Fetches all history so Chromatic can compare against previous builds
           fetch-depth: 0
-      - uses: actions/setup-node@v3
+
+      - name: 🧱 Setup node & yarn
+        uses: actions/setup-node@v4
         with:
-          #👇 Sets the version of Node.js to use
-          node-version: 18
-      - run: yarn
-        #👇 Adds Chromatic as a step in the workflow
-      - uses: chromaui/action@v1
-        # Options required for Chromatic's GitHub Action
+          node-version-file: 'package.json'
+          cache: 'yarn'
+
+      - name: 📦 Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 💅 Build Storybook
+        run: yarn storybook:build
+
+      - name: 🚀 Publish to Chromatic
+        id: publish-to-chromatic
+        uses: chromaui/action@latest
         with:
-          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/design-systems-for-developers/react/en/review/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          exitZeroOnChanges: true
+          exitOnceUploaded: true
+          onlyChanged: true
+          zip: true
+          buildScriptName: 'storybook:build'
+
+      - name: 🔮 Run Storybook tests
+        run: npx playwright install --with-deps && yarn storybook:test
+        env:
+          TARGET_URL: ${{ steps.publish-to-chromatic.outputs.storybookUrl }}
