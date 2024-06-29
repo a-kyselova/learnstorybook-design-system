@@ -18,13 +18,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: ⎔ Setup node
+      - name: 🧱 Setup node & yarn
         uses: actions/setup-node@v4
         with:
           node-version-file: 'package.json'
           cache: 'yarn'
 
-      - name: 📥 Install dependencies
+      - name: 📦 Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: 💅 Build Storybook
@@ -43,7 +43,7 @@ jobs:
           zip: true
           buildScriptName: 'storybook:build'
 
-      - name: Run Storybook tests
+      - name: 🔮 Run Storybook tests
         run: yarn storybook:test
         env:
           TARGET_URL: ${{ steps.publish-to-chromatic.outputs.storybookUrl }}
